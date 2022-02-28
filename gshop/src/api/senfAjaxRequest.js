@@ -12,3 +12,7 @@ const BASE_URL = '/api'
 export const requestAddress = (geohash) => ajax(`${BASE_URL}/position/${geohash}`)
 export const requestAllCategories = () => ajax(BASE_URL + '/index_category')
 export const requestAllShops = (latitude, longitude) => ajax(BASE_URL + '/shops', {latitude, longitude})
+// 不加api 为了不让代理拦截
+export const reqShopInfo = () => ajax('/info')
+export const reqShopGoods = () => ajax('/goods')
+export const reqShopRating = () => ajax('/ratings')
