@@ -9,6 +9,10 @@ import Search from '../pages/Search/Search'
 import Order from '../pages/Order/Order'
 import Profile from '../pages/Profile/Profile'
 import Login from '../pages/Login/Login'
+import shop from '../pages/Shop/shop'
+import shopGoods from '../pages/Shop/shopGoods'
+import shopInfo from '../pages/Shop/shopInfo'
+import shopRatings from '../pages/Shop/shopRatings'
 // 声明使用插件
 Vue.use(VueRouter)
 export default new VueRouter({
@@ -54,6 +58,28 @@ export default new VueRouter({
       meta: {
         showFooter: false
       }
+    },
+    {
+      path: '/shop',
+      component: shop,
+      children:[
+        {
+          path: '/shop/goods',
+          component: shopGoods
+        },
+        {
+          path: '/shop/ratings',
+          component: shopRatings
+        },
+        {
+          path: '/shop/info',
+          component: shopInfo
+        },
+        {
+          path: '',
+          redirect: '/shop/goods'
+        }
+      ]
     }
   ]
 })
