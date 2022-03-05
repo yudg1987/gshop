@@ -22,7 +22,6 @@ export default {
   name: 'shop',
   components: {ShopHeader},
   mounted () {
-    this.$store.dispatch('getShopGoods')
     this.$store.dispatch('getShopInfo')
     this.$store.dispatch('getShopRatings')
   }
