@@ -5,9 +5,19 @@ import App from './App'
 import router from './router/index'
 import store from './store'
 import './mock/mockServer'
+import {Button} from 'mint-ui'
+//图片懒加载
+import VueLazyload from 'vue-lazyload'
+import loading from './common/imgs/loading.gif'
 Vue.config.productionTip = false
-
+//import './fiters' // 加载时间过滤器
+import './filters'
 /* eslint-disable no-new */
+// 注册全局组件标签
+Vue.component(Button.name, Button)  // <mt-button>
+Vue.use(VueLazyload, { // 内部自定义一个指令lazy
+  loading
+})
 new Vue({
   el: '#app',
   components: { App,store },

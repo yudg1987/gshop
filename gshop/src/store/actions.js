@@ -1,4 +1,5 @@
 import {
+  reqSearchShops,
   reqShopGoods,
   reqShopInfo,
   reqShopRating,
@@ -12,7 +13,7 @@ import {
   GETALLSHOPS,
   RECEIVE_INFO,
   RECEIVE_RATINGS,
-  RECEIVE_GOODS
+  RECEIVE_GOODS, INCREASE_FOOD_COUNT, DECREASE_FOOD_COUNT, CLEARCART, SEARCHSHOPS, RECEIVE_USER_INFO, RESET_USER_INFO
 } from './mutation-types'
 export default {
   async getAddress ({commit, state}) {
@@ -80,5 +81,52 @@ export default {
       // 数据更新了, 通知一下组件
       callback && callback()
     }
-  }
+  },
+
+  async updateCount({commit}, {isAdd,food}) {
+    //alert(food)
+    if(isAdd){
+      commit(INCREASE_FOOD_COUNT,{food})
+    }else{
+      commit(DECREASE_FOOD_COUNT,{food})
+    }
+
+  },
+  //清空购物车
+  clearCart({commit}){
+    commit(CLEARCART)
+  },
+
+  async searchShops({commit,state}, keyword) {
+    const geohash = state.latitude + ',' + state.longitude
+    const result = await reqSearchShops(keyword,geohash)
+    if (result.code === 0) {
+      const searchShops = result.data
+      commit(SEARCHSHOPS, {searchShops})
+      // 数据更新了, 通知一下组件
+      //callback && callback()
+    }
+  },
+
+  // 同步记录用户信息
+  recordUser({commit}, userInfo) {
+    commit(RECEIVE_USER_INFO, {userInfo})
+  },
+
+  // 异步获取用户信息
+  async getUserInfo({commit}) {
+    const result = await reqUserInfo()
+    if (result.code === 0) {
+      const userInfo = result.data
+      commit(RECEIVE_USER_INFO, {userInfo})
+    }
+  },
+
+  // 异步登出
+  async logout({commit}) {
+    const result = await reqLogout()
+    if (result.code === 0) {
+      commit(RESET_USER_INFO)
+    }
+  },
 }
